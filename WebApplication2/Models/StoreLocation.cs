@@ -5,6 +5,7 @@
         public Guid StoreNumber { get; set; }
         public string StreetNameNumber { get; set; }
         public CanadianProvince CanadianProvince { get; set; }
+        public HashSet<StoreLaptop> storeLaptops { get; set; } = new HashSet<StoreLaptop>();
     }
 
     public enum CanadianProvince
@@ -23,5 +24,4 @@
         Nunavut,
         Yukon
     }
-
 }

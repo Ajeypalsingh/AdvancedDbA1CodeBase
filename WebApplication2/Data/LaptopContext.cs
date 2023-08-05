@@ -9,6 +9,7 @@ namespace WebApplication2.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Laptop>().HasKey(l => l.Number);
+            modelBuilder.Entity<StoreLocation>().HasKey(sl => sl.StoreNumber);
         }
 
         public LaptopContext(DbContextOptions options) : base(options)
