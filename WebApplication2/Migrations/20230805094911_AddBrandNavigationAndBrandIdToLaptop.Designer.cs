@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication2.Data;
 
@@ -11,9 +12,11 @@ using WebApplication2.Data;
 namespace WebApplication2.Migrations
 {
     [DbContext(typeof(LaptopContext))]
-    partial class LaptopContextModelSnapshot : ModelSnapshot
+    [Migration("20230805094911_AddBrandNavigationAndBrandIdToLaptop")]
+    partial class AddBrandNavigationAndBrandIdToLaptop
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,20 +72,23 @@ namespace WebApplication2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("LaptopId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("LaptopStock")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("Laptopid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StoreId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("StoreLocationStoreNumber")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("LaptopId");
+                    b.HasIndex("Laptopid");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StoreLocationStoreNumber");
 
                     b.ToTable("StoreLaps");
                 });
@@ -120,19 +126,19 @@ namespace WebApplication2.Migrations
                 {
                     b.HasOne("WebApplication2.Models.Laptop", "Laptop")
                         .WithMany("storeLaptops")
-                        .HasForeignKey("LaptopId")
+                        .HasForeignKey("Laptopid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApplication2.Models.StoreLocation", "Store")
+                    b.HasOne("WebApplication2.Models.StoreLocation", "StoreLocation")
                         .WithMany("storeLaptops")
-                        .HasForeignKey("StoreId")
+                        .HasForeignKey("StoreLocationStoreNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Laptop");
 
-                    b.Navigation("Store");
+                    b.Navigation("StoreLocation");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Laptop", b =>
